@@ -11,7 +11,7 @@ class Azimuth(Measurement):
     def __init__(self, start_point: Point, end_point: Point, mse=30/206265):
         super().__init__(start_point=start_point, end_point=end_point, mse=mse)
 
-    def get_coefficients_df(self):
+    def get_a_coefficients_df(self):
         coefficient_dict = {}
         if self.start_point.is_base_point is False:
             coefficient_dict[f"{self.start_point.point_name}_x"] = math.sin(self.azimuth) / self.horizontal_distance

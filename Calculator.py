@@ -49,9 +49,12 @@ class Calculator:
 
     def calk_matrices(self):
         for station in self.project.stations.values():
-            station_df = station.get_a_sub_df_for_station()
-            self.a_df = pd.concat([self.a_df, station_df]).fillna(0)
-            self.p_df = pd.concat([self.p_df, station.get_p_sub_df_for_station()]).fillna(0)
+            station_a_coefficient_df, station_p_df = station.get_a_and_p_sub_df_for_station()
+            # station_df = station.get_a_sub_df_for_station()
+            self.a_df = pd.concat([self.a_df, station_a_coefficient_df]).fillna(0)
+            self.p_df = pd.concat([self.p_df, station_p_df]).fillna(0)
+            # self.a_df = pd.concat([self.a_df, station_df]).fillna(0)
+            # self.p_df = pd.concat([self.p_df, station.get_p_sub_df_for_station()]).fillna(0)
 
             dz_equivalent, p = station.get_direction_coefficients_and_p_for_station()
             self.a_df = self.a_df._append(dz_equivalent, ignore_index=False).fillna(0)

@@ -1,5 +1,7 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from math import atan2
+
+import pandas as pd
 
 from CONFIG import MU_0
 from Point import Point
@@ -52,3 +54,12 @@ class Measurement(ABC):
     def __str__(self):
         return (f"{self.__class__.__name__}(start_point={self.start_point}, "
                 f"end_point={self.end_point}, mse={self.mse})")
+
+    @abstractmethod
+    def get_a_coefficients_df(self):
+        pass
+
+    def get_p_df(self):
+        p_df = pd.DataFrame([{"p": self.p}], index=[self.get_index()])
+        return p_df
+

@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 
 from measurements.Azimuth import Azimuth
 from measurements.Direction import Direction
-from measurements.Distance import Distance
+from measurements.HorizontalDistance import HorizontalDistance
 from measurements.Measurement import Measurement
+from measurements.TotalStationDirection import TotalStationDirection
 
 
 class ProjectMPLPlotter:
@@ -45,14 +46,17 @@ class ProjectMPLPlotter:
                 self._plot_measurement(measurement)
 
     def _plot_measurement(self, measurement: Measurement):
-        if isinstance(measurement, Distance):
+        if isinstance(measurement, TotalStationDirection):
+            for item in measurement:
+                self._plot_measurement(measurement=item)
+        if isinstance(measurement, HorizontalDistance):
             self._plot_distance(measurement)
         if isinstance(measurement, Direction):
             self._plot_direction(measurement)
         if isinstance(measurement, Azimuth):
             self._plot_azimuth(measurement)
 
-    def _plot_distance(self, distance: Distance):
+    def _plot_distance(self, distance: HorizontalDistance):
         self.ax.plot([distance.start_point.y, distance.end_point.y],
                      [distance.start_point.x, distance.end_point.x],
                      c="blue")

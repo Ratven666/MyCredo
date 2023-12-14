@@ -4,7 +4,7 @@ from Project import Project
 from Station import Station
 from measurements.Azimuth import Azimuth
 from measurements.Direction import Direction
-from measurements.Distance import Distance
+from measurements.HorizontalDistance import HorizontalDistance
 
 p0 = Point(point_name="p0", x=0, y=0, z=0, is_base_point=True)
 p1 = Point(point_name="p1", x=500, y=0, z=0, is_base_point=True)
@@ -15,17 +15,17 @@ p5 = Point(point_name="p5", x=250, y=300, z=0, is_base_point=False)
 
 p_lst = [p0, p1, p2, p3, p4, p5]
 
-l1 = Distance(p4, p0)
-l2 = Distance(p4, p1)
-l3 = Distance(p4, p2)
+l1 = HorizontalDistance(p4, p0)
+l2 = HorizontalDistance(p4, p1)
+l3 = HorizontalDistance(p4, p2)
 
 az1 = Azimuth(p4, p0)
 az2 = Azimuth(p4, p1)
 az3 = Azimuth(p4, p2)
 
-l4 = Distance(p5, p3)
-l5 = Distance(p5, p2)
-l6 = Distance(p5, p4)
+l4 = HorizontalDistance(p5, p3)
+l5 = HorizontalDistance(p5, p2)
+l6 = HorizontalDistance(p5, p4)
 
 az4 = Azimuth(p5, p3)
 az5 = Azimuth(p5, p2)
@@ -98,4 +98,4 @@ for st in calculator.project.stations.values():
 print(calculator.a_df)
 print(calculator.p_df)
 
-# project.plot(scale=30)
+project.plot(scale=30)
