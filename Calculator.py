@@ -6,46 +6,50 @@ from CONFIG import MU_0
 
 class Calculator:
 
-    point_indexes = {}
+    # point_indexes = {}
 
     def __init__(self, project):
         self.project = project
         self.a_df = None
         self.p_df = None
-
-
+        self.k_df = None
 
     def calculate(self):
-        self.get_point_order()
+        # self.get_point_order()
         # self.create_a_matrix_structure()
         self.calk_matrices()
-        # self.a_df.fillna(0)
-        # print(self.a_df)
-        # print(self.p_df)
-        A, P = self.calc_np_arrays()
-        N = A.T @ P @ A
-        # print(N)
-        Q = np.linalg.inv(N)
-        # print(Q)
-        K = (MU_0 ** 2) * Q
+        K = self.calculate_covariance_matrix()
         print(np.sqrt(np.diagonal(K)))
         values_order = list(self.a_df)
-        df = pd.DataFrame(K, columns=values_order, index=values_order)
-        # print(df)
+        self.k_df = pd.DataFrame(K, columns=values_order, index=values_order)
+        # print(self.k_df)
 
-    def get_point_order(self):
-        count = 0
-        for point in self.project.points["evaluated_points"].values():
-            self.point_indexes[point.point_name] = count
-            count += 1
+    def get_mse_df(self):
+        K = self.calculate_covariance_matrix()
+        values_order = list(self.a_df)
+        variance = np.sqrt(np.diagonal(K))
+        return pd.Series(variance, index=values_order, name="mse")
 
-    def create_a_matrix_structure(self):
-        evaluated_points_coord_lst = []
-        for point in self.project.points["evaluated_points"].values():
-            evaluated_points_coord_lst.append(f"{point.point_name}_x")
-            evaluated_points_coord_lst.append(f"{point.point_name}_y")
-            evaluated_points_coord_lst.append(f"{point.point_name}_z")
-        self.a_df = pd.DataFrame(columns=evaluated_points_coord_lst)
+    def calculate_covariance_matrix(self):
+        A, P = self.calc_np_arrays()
+        N = A.T @ P @ A
+        Q = np.linalg.inv(N)
+        K = (MU_0 ** 2) * Q
+        return K
+
+    # def get_point_order(self):
+    #     count = 0
+    #     for point in self.project.points["evaluated_points"].values():
+    #         self.point_indexes[point.point_name] = count
+    #         count += 1
+
+    # def create_a_matrix_structure(self):
+    #     evaluated_points_coord_lst = []
+    #     for point in self.project.points["evaluated_points"].values():
+    #         evaluated_points_coord_lst.append(f"{point.point_name}_x")
+    #         evaluated_points_coord_lst.append(f"{point.point_name}_y")
+    #         evaluated_points_coord_lst.append(f"{point.point_name}_z")
+    #     self.a_df = pd.DataFrame(columns=evaluated_points_coord_lst)
 
     def calk_matrices(self):
         for station in self.project.stations.values():

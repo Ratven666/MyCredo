@@ -1,3 +1,4 @@
+from CONFIG import THEODOLITE_SURVEYOR_NETWORK
 from Calculator import Calculator
 from Point import Point
 from Project import Project
@@ -15,30 +16,30 @@ p5 = Point(point_name="p5", x=250, y=300, z=0, is_base_point=False)
 
 p_lst = [p0, p1, p2, p3, p4, p5]
 
-l1 = HorizontalDistance(p4, p0)
-l2 = HorizontalDistance(p4, p1)
-l3 = HorizontalDistance(p4, p2)
+l1 = HorizontalDistance(p4, p0, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+l2 = HorizontalDistance(p4, p1, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+l3 = HorizontalDistance(p4, p2, mse_class=THEODOLITE_SURVEYOR_NETWORK)
 
-az1 = Azimuth(p4, p0)
-az2 = Azimuth(p4, p1)
-az3 = Azimuth(p4, p2)
+az1 = Azimuth(p4, p0, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+az2 = Azimuth(p4, p1, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+az3 = Azimuth(p4, p2, mse_class=THEODOLITE_SURVEYOR_NETWORK)
 
-l4 = HorizontalDistance(p5, p3)
-l5 = HorizontalDistance(p5, p2)
-l6 = HorizontalDistance(p5, p4)
+l4 = HorizontalDistance(p5, p3, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+l5 = HorizontalDistance(p5, p2, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+l6 = HorizontalDistance(p5, p4, mse_class=THEODOLITE_SURVEYOR_NETWORK)
 
-az4 = Azimuth(p5, p3)
-az5 = Azimuth(p5, p2)
-az6 = Azimuth(p5, p4)
+az4 = Azimuth(p5, p3, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+az5 = Azimuth(p5, p2, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+az6 = Azimuth(p5, p4, mse_class=THEODOLITE_SURVEYOR_NETWORK)
 
-dir1 = Direction(p4, p0)
-dir2 = Direction(p4, p1)
-dir3 = Direction(p4, p2)
-dir4 = Direction(p4, p3)
+dir1 = Direction(p4, p0, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+dir2 = Direction(p4, p1, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+dir3 = Direction(p4, p2, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+dir4 = Direction(p4, p3, mse_class=THEODOLITE_SURVEYOR_NETWORK)
 
-dir5 = Direction(p5, p4)
-dir6 = Direction(p5, p2)
-dir7 = Direction(p5, p3)
+dir5 = Direction(p5, p4, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+dir6 = Direction(p5, p2, mse_class=THEODOLITE_SURVEYOR_NETWORK)
+dir7 = Direction(p5, p3, mse_class=THEODOLITE_SURVEYOR_NETWORK)
 
 
 # dir1 = Direction(p4, p3, mse=0)
@@ -95,7 +96,9 @@ for st in calculator.project.stations.values():
     # print(st.a_df)
 # print(a)
 
-print(calculator.a_df)
-print(calculator.p_df)
-
-project.plot(scale=30)
+print(calculator.k_df)
+print(calculator.get_mse_df())
+# print(calculator.a_df)
+# print(calculator.p_df)
+#
+# project.plot(scale=30)

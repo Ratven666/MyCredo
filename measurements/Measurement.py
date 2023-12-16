@@ -5,14 +5,16 @@ import pandas as pd
 
 from CONFIG import MU_0
 from Point import Point
+from accuracy_classes.AccuracyClass import AccuracyClass
 
 
 class Measurement(ABC):
 
-    def __init__(self, start_point: Point, end_point: Point, mse):
+    def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass):
         self.start_point = start_point
         self.end_point = end_point
-        self.mse = mse
+        self.mse_class = mse_class
+        self.mse = None
 
     @property
     def p(self):
@@ -59,7 +61,10 @@ class Measurement(ABC):
     def get_a_coefficients_df(self):
         pass
 
+    @abstractmethod
+    def _init_measure_mse(self):
+        pass
+
     def get_p_df(self):
         p_df = pd.DataFrame([{"p": self.p}], index=[self.get_index()])
         return p_df
-

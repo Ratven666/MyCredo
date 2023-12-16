@@ -1,6 +1,7 @@
 from Calculator import Calculator
 from Point import Point
 from Station import Station
+from measurements.Measurement import Measurement
 from plotters.ProjectMPLPlotter import ProjectMPLPlotter
 
 
@@ -18,7 +19,7 @@ class Project:
         self._calculator = None
 
     def calculate(self, calculator=Calculator):
-        self._calculator = calculator(self)
+        self._calculator = calculator(project=self)
         self._calculator.calculate()
 
     def add_point(self, point: Point):
@@ -34,6 +35,15 @@ class Project:
 
     def add_station(self, station: Station):
         self.stations[station.station_point.point_name] = station
+
+    def add_measurement(self, measurement: Measurement):
+        base_point = measurement.start_point
+        if base_point.point_name in self.stations:
+            self.stations[base_point.point_name].add_measurement(measurement)
+        else:
+            station = Station(station_point=base_point)
+            station.add_measurement(measurement=measurement)
+            self.add_station(station=station)
 
     def plot(self, scale=10, plotter=ProjectMPLPlotter):
         plotter = plotter()

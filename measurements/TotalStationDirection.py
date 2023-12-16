@@ -2,6 +2,7 @@ import pandas as pd
 
 from CONFIG import MU_0
 from Point import Point
+from accuracy_classes.AccuracyClass import AccuracyClass
 from measurements.Direction import Direction
 from measurements.Measurement import Measurement
 from measurements.SlopeDistance import SlopeDistance
@@ -10,11 +11,11 @@ from measurements.ZenithAngle import ZenithAngle
 
 class TotalStationDirection(Measurement):
 
-    def __init__(self, start_point: Point, end_point: Point, mse=0.05):
-        super().__init__(start_point=start_point, end_point=end_point, mse=mse)
-        self.st_slope_distance = SlopeDistance(start_point=start_point, end_point=end_point)
-        self.st_direction = Direction(start_point=start_point, end_point=end_point)
-        self.st_zenith = ZenithAngle(start_point=start_point, end_point=end_point)
+    def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass):
+        super().__init__(start_point=start_point, end_point=end_point, mse_class=mse_class)
+        self.st_slope_distance = SlopeDistance(start_point=start_point, end_point=end_point, mse_class=mse_class)
+        self.st_direction = Direction(start_point=start_point, end_point=end_point, mse_class=mse_class)
+        self.st_zenith = ZenithAngle(start_point=start_point, end_point=end_point, mse_class=mse_class)
 
     def __iter__(self):
         return iter([self.st_slope_distance,
