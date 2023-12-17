@@ -1,10 +1,10 @@
-from Point import Point
+from base.Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
-from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
-from measurements.Direction import Direction
-from measurements.HorizontalDistance import HorizontalDistance
-from measurements.SlopeDistance import SlopeDistance
-from measurements.ZenithAngle import ZenithAngle
+from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
+from measurements.directions.Direction import Direction
+from measurements.distances.HorizontalDistance import HorizontalDistance
+from measurements.distances.SlopeDistance import SlopeDistance
+from measurements.directions.ZenithAngle import ZenithAngle
 
 
 class TotalStationDirection3D(CompositeMeasurementsABC):

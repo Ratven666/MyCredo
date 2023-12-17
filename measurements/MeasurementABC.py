@@ -4,7 +4,7 @@ from math import atan2
 import pandas as pd
 
 from CONFIG import MU_0
-from Point import Point
+from base.Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
 
 

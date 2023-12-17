@@ -1,8 +1,8 @@
-from Calculator import Calculator
-from Point import Point
-from Station import Station
-from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
+from base.Calculator import Calculator
+from base.Point import Point
+from base.Station import Station
 from measurements.MeasurementABC import MeasurementABC
+from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
 from plotters.ProjectMPLPlotter import ProjectMPLPlotter
 
 

@@ -2,7 +2,7 @@ from abc import ABC
 
 import pandas as pd
 
-from Point import Point
+from base.Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
 
 

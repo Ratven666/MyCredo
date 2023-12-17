@@ -1,11 +1,11 @@
 from CONFIG import THEODOLITE_SURVEYOR_NETWORK
-from Calculator import Calculator
-from Point import Point
-from Project import Project
-from Station import Station
-from measurements.Azimuth import Azimuth
-from measurements.Direction import Direction
-from measurements.HorizontalDistance import HorizontalDistance
+from base.Calculator import Calculator
+from base.Point import Point
+from base.Project import Project
+from base.Station import Station
+from measurements.directions.Azimuth import Azimuth
+from measurements.directions.Direction import Direction
+from measurements.distances.HorizontalDistance import HorizontalDistance
 
 p0 = Point(point_name="p0", x=0, y=0, z=0, is_base_point=True)
 p1 = Point(point_name="p1", x=500, y=0, z=0, is_base_point=True)

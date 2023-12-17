@@ -1,9 +1,7 @@
 from CONFIG import THEODOLITE_SURVEYOR_NETWORK
-from Point import Point
-from Project import Project
-from measurements.Direction import Direction
-from measurements.HorizontalDistance import HorizontalDistance
-from measurements.TotalStationDirections import TotalStationDirection2D
+from base.Point import Point
+from base.Project import Project
+from measurements.composite_measurments.TotalStationDirections import TotalStationDirection3D
 
 p0 = Point(point_name="p0", x=0, y=0, z=0, is_base_point=True)
 p1 = Point(point_name="p1", x=1000, y=0, z=0, is_base_point=True)
@@ -14,10 +12,10 @@ p4 = Point(point_name="p4", x=5500, y=500, z=0, is_base_point=False)
 
 pr = Project(project_name="serif")
 
-pr.add_measurement(TotalStationDirection2D(start_point=p4, end_point=p0, mse_class=THEODOLITE_SURVEYOR_NETWORK))
-pr.add_measurement(TotalStationDirection2D(start_point=p4, end_point=p1, mse_class=THEODOLITE_SURVEYOR_NETWORK))
-pr.add_measurement(TotalStationDirection2D(start_point=p4, end_point=p2, mse_class=THEODOLITE_SURVEYOR_NETWORK))
-pr.add_measurement(TotalStationDirection2D(start_point=p4, end_point=p3, mse_class=THEODOLITE_SURVEYOR_NETWORK))
+pr.add_measurement(TotalStationDirection3D(start_point=p4, end_point=p0, mse_class=THEODOLITE_SURVEYOR_NETWORK))
+pr.add_measurement(TotalStationDirection3D(start_point=p4, end_point=p1, mse_class=THEODOLITE_SURVEYOR_NETWORK))
+pr.add_measurement(TotalStationDirection3D(start_point=p4, end_point=p2, mse_class=THEODOLITE_SURVEYOR_NETWORK))
+pr.add_measurement(TotalStationDirection3D(start_point=p4, end_point=p3, mse_class=THEODOLITE_SURVEYOR_NETWORK))
 
 
 # pr.add_measurement(HorizontalDistance(start_point=p4, end_point=p0, mse_class=THEODOLITE_SURVEYOR_NETWORK))

@@ -1,9 +1,9 @@
 import pandas as pd
 
-from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
-from measurements.Direction import Direction
+from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
+from measurements.directions.Direction import Direction
 from measurements.MeasurementABC import MeasurementABC
-from Point import Point
+from base.Point import Point
 
 
 class Station:

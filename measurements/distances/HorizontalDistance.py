@@ -2,19 +2,17 @@ import math
 
 import pandas as pd
 
-from Point import Point
+from base.Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
-from measurements.MeasurementABC import MeasurementABC
+from measurements.distances.DistanceABC import DistanceABC
 
 
-class HorizontalDistance(MeasurementABC):
+class HorizontalDistance(DistanceABC):
 
-    def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass):
-        super().__init__(start_point=start_point, end_point=end_point, mse_class=mse_class)
-        self._init_measure_mse()
-
-    def _init_measure_mse(self):
-        self.mse = self.mse_class.distance_mse
+    def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass,
+                 is_distance_measuring_tape=False):
+        super().__init__(start_point=start_point, end_point=end_point, mse_class=mse_class,
+                         is_distance_measuring_tape=is_distance_measuring_tape)
 
     def get_a_coefficients_df(self):
         coefficient_dict = {}

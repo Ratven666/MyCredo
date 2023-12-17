@@ -4,8 +4,8 @@ MU_0 = 30
 
 REFERENCE_SURVEYOR_NETWORK = AccuracyClass(angle_mse=20,
                                            azimuth_mse=30,
-                                           distance_mse=0.03)
+                                           distance_mse_a=0.03)
 
 THEODOLITE_SURVEYOR_NETWORK = AccuracyClass(angle_mse=5,
                                             azimuth_mse=30,
-                                            distance_mse=0.05)
+                                            distance_mse_a=0.05)

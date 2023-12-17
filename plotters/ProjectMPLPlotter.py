@@ -2,12 +2,12 @@ from math import sin, cos
 
 import matplotlib.pyplot as plt
 
-from measurements.Azimuth import Azimuth
-from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
-from measurements.Direction import Direction
-from measurements.HorizontalDistance import HorizontalDistance
+from measurements.directions.Azimuth import Azimuth
+from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
+from measurements.directions.Direction import Direction
+from measurements.distances.HorizontalDistance import HorizontalDistance
 from measurements.MeasurementABC import MeasurementABC
-from measurements.TotalStationDirections import TotalStationDirection3D
+from measurements.composite_measurments.TotalStationDirections import TotalStationDirection3D
 
 
 class ProjectMPLPlotter:

@@ -1,8 +1,8 @@
 from CONFIG import THEODOLITE_SURVEYOR_NETWORK
-from Point import Point
-from Project import Project
-from measurements.Azimuth import Azimuth
-from measurements.TotalStationDirections import TotalStationDirection2D
+from base.Point import Point
+from base.Project import Project
+from measurements.directions.Azimuth import Azimuth
+from measurements.composite_measurments.TotalStationDirections import TotalStationDirection2D
 
 p0 = Point(point_name="p0", x=0, y=0, z=0, is_base_point=True)
 p1 = Point(point_name="p1", x=0, y=50, z=0, is_base_point=False)
