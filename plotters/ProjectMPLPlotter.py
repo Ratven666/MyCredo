@@ -3,10 +3,11 @@ from math import sin, cos
 import matplotlib.pyplot as plt
 
 from measurements.Azimuth import Azimuth
+from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
 from measurements.Direction import Direction
 from measurements.HorizontalDistance import HorizontalDistance
-from measurements.Measurement import Measurement
-from measurements.TotalStationDirection import TotalStationDirection
+from measurements.MeasurementABC import MeasurementABC
+from measurements.TotalStationDirections import TotalStationDirection3D
 
 
 class ProjectMPLPlotter:
@@ -24,11 +25,13 @@ class ProjectMPLPlotter:
             self.ax.text(base_point.y + offset,
                          base_point.x + offset,
                          base_point.point_name,
-                         c="red", fontsize=font_size)
+                         c="red")
+                         # c="red", fontsize=font_size)
             self.ax.text(base_point.y + offset,
                          base_point.x - offset * 2,
                          f"z={base_point.z}",
-                         c="black", fontsize=font_size / 1.2)
+                         c="black")
+                         # c="black", fontsize=font_size / 1.2)
         for evaluated_point in self.project.points["evaluated_points"].values():
             self.ax.scatter(evaluated_point.y, evaluated_point.x, c="blue", s=self.scale)
             self.ax.text(evaluated_point.y + offset,
@@ -45,8 +48,8 @@ class ProjectMPLPlotter:
             for measurement in station._measurements:
                 self._plot_measurement(measurement)
 
-    def _plot_measurement(self, measurement: Measurement):
-        if isinstance(measurement, TotalStationDirection):
+    def _plot_measurement(self, measurement: MeasurementABC):
+        if isinstance(measurement, TotalStationDirection3D):
             for item in measurement:
                 self._plot_measurement(measurement=item)
         if isinstance(measurement, HorizontalDistance):
@@ -55,6 +58,9 @@ class ProjectMPLPlotter:
             self._plot_direction(measurement)
         if isinstance(measurement, Azimuth):
             self._plot_azimuth(measurement)
+        if isinstance(measurement, CompositeMeasurementsABC):
+            for measure in measurement:
+                self._plot_measurement(measure)
 
     def _plot_distance(self, distance: HorizontalDistance):
         self.ax.plot([distance.start_point.y, distance.end_point.y],

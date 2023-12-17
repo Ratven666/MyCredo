@@ -1,7 +1,8 @@
 from Calculator import Calculator
 from Point import Point
 from Station import Station
-from measurements.Measurement import Measurement
+from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
+from measurements.MeasurementABC import MeasurementABC
 from plotters.ProjectMPLPlotter import ProjectMPLPlotter
 
 
@@ -17,6 +18,18 @@ class Project:
     def __init__(self, project_name):
         self.project_name = project_name
         self._calculator = None
+
+    @property
+    def k_df(self):
+        if self._calculator is None:
+            self.calculate()
+        return self._calculator.k_df
+
+    @property
+    def mse_df(self):
+        if self._calculator is None:
+            self.calculate()
+        return self._calculator.get_mse_df()
 
     def calculate(self, calculator=Calculator):
         self._calculator = calculator(project=self)
@@ -36,7 +49,7 @@ class Project:
     def add_station(self, station: Station):
         self.stations[station.station_point.point_name] = station
 
-    def add_measurement(self, measurement: Measurement):
+    def add_measurement(self, measurement: [MeasurementABC, CompositeMeasurementsABC]):
         base_point = measurement.start_point
         if base_point.point_name in self.stations:
             self.stations[base_point.point_name].add_measurement(measurement)
@@ -44,10 +57,10 @@ class Project:
             station = Station(station_point=base_point)
             station.add_measurement(measurement=measurement)
             self.add_station(station=station)
+        self.add_point(measurement.start_point)
+        self.add_point(measurement.end_point)
 
     def plot(self, scale=10, plotter=ProjectMPLPlotter):
         plotter = plotter()
         plotter.scale = scale
         plotter.plot(self)
-
-

@@ -1,7 +1,8 @@
 import pandas as pd
 
+from measurements.CompositeMeasurementsABC import CompositeMeasurementsABC
 from measurements.Direction import Direction
-from measurements.Measurement import Measurement
+from measurements.MeasurementABC import MeasurementABC
 from Point import Point
 
 
@@ -23,26 +24,15 @@ class Station:
             station_p_df = pd.concat([station_p_df, measure.get_p_df()]).fillna(0)
         return station_a_coefficient_df, station_p_df
 
-
-    # def get_a_sub_df_for_station(self):
-    #     station_coefficient_df = pd.DataFrame()
-    #     for measure in self:
-    #         measure_df = measure.get_coefficients_df()
-    #         station_coefficient_df = pd.concat([station_coefficient_df, measure_df]).fillna(0)
-    #     return station_coefficient_df
-    #
-    # def get_p_sub_df_for_station(self):
-    #     station_p_df = pd.DataFrame()
-    #     for measure in self:
-    #         ##############
-    #         #############
-    #         p_df = pd.DataFrame([{"p": measure.p}], index=[measure.get_index()])
-    #         station_p_df = pd.concat([station_p_df, p_df])
-    #     return station_p_df
-
-
     def get_direction_coefficients_and_p_for_station(self):
-        dir_m = [measurement for measurement in self if isinstance(measurement, Direction)]
+        dir_m = []
+        for measurement in self:
+            if isinstance(measurement, Direction):
+                dir_m.append(measurement)
+            if isinstance(measurement, CompositeMeasurementsABC):
+                for measure in measurement:
+                    if isinstance(measure, Direction):
+                        dir_m.append(measure)
         st_df = pd.DataFrame()
         sum_p = 0
         for dir in dir_m:
@@ -59,7 +49,7 @@ class Station:
         p_df = pd.DataFrame([{"p": p}], index=[f"{self.station_point.point_name}_dz"])
         return dz_equivalent, p_df
 
-    def add_measurement(self, measurement: Measurement):
+    def add_measurement(self, measurement: MeasurementABC):
         if self.station_point == measurement.start_point:
             self._measurements.append(measurement)
         else:

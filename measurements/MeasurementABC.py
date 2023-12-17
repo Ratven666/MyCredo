@@ -8,7 +8,7 @@ from Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
 
 
-class Measurement(ABC):
+class MeasurementABC(ABC):
 
     def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass):
         self.start_point = start_point
@@ -51,11 +51,11 @@ class Measurement(ABC):
 
     def __repr__(self):
         return (f"{self.__class__.__name__}(start_point={repr(self.start_point)}, "
-                f"end_point={repr(self.end_point)}, mse={self.mse})")
+                f"end_point={repr(self.end_point)}, mse_class={self.mse_class})")
 
     def __str__(self):
         return (f"{self.__class__.__name__}(start_point={self.start_point}, "
-                f"end_point={self.end_point}, mse={self.mse})")
+                f"end_point={self.end_point}, mse_class={self.mse_class})")
 
     @abstractmethod
     def get_a_coefficients_df(self):
