@@ -29,7 +29,7 @@ class Project:
     def mse_df(self):
         if self._calculator is None:
             self.calculate()
-        return self._calculator.get_mse_df()
+        return self._calculator.points_mse_df
 
     def calculate(self, calculator=Calculator):
         self._calculator = calculator(project=self)
@@ -61,6 +61,5 @@ class Project:
         self.add_point(measurement.end_point)
 
     def plot(self, scale=10, plotter=ProjectMPLPlotter):
-        plotter = plotter()
-        plotter.scale = scale
+        plotter = plotter(scale=scale)
         plotter.plot(self)

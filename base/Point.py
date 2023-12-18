@@ -11,6 +11,7 @@ class Point:
         self.y = y
         self.z = z
         self.is_base_point = is_base_point
+        self.mse_data = None
 
     def __repr__(self):
         return (f"{self.__class__.__name__}(point_name={self.point_name}, "

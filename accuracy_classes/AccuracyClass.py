@@ -44,7 +44,7 @@ if __name__ == "__main__":
     first_class = AccuracyClass(angle_mse=30,
                                 direction_mse=14.1,
                                 azimuth_mse=30,
-                                distance_mse=0.01,
+                                distance_mse_a=0.01,
                                 zenith_mse=5,
                                 )
     print(first_class)

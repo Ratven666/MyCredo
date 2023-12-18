@@ -1,6 +1,7 @@
 from math import sin, cos
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 
 from measurements.directions.Azimuth import Azimuth
 from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
@@ -12,26 +13,24 @@ from measurements.composite_measurments.TotalStationDirections import TotalStati
 
 class ProjectMPLPlotter:
 
-    def __init__(self):
+    def __init__(self, scale):
         self.project = None
-        self.scale = None
+        self.scale = scale
         self.fig, self.ax = plt.subplots()
 
     def _plot_points(self):
         font_size = self.scale / 2.5
-        offset = 1
+        offset = self.scale / 10
         for base_point in self.project.points["base_points"].values():
             self.ax.scatter(base_point.y, base_point.x, c="red", s=self.scale)
             self.ax.text(base_point.y + offset,
                          base_point.x + offset,
                          base_point.point_name,
-                         c="red")
-                         # c="red", fontsize=font_size)
+                         c="red", fontsize=font_size)
             self.ax.text(base_point.y + offset,
                          base_point.x - offset * 2,
                          f"z={base_point.z}",
-                         c="black")
-                         # c="black", fontsize=font_size / 1.2)
+                         c="black", fontsize=font_size / 1.2)
         for evaluated_point in self.project.points["evaluated_points"].values():
             self.ax.scatter(evaluated_point.y, evaluated_point.x, c="blue", s=self.scale)
             self.ax.text(evaluated_point.y + offset,
@@ -107,8 +106,36 @@ class ProjectMPLPlotter:
                      c="green",
                      linestyle="--")
 
+    def _plot_mse_ellipses(self):
+        for point in self.project.points["evaluated_points"].values():
+            if point.mse_data is None:
+                continue
+            self.ax.add_artist(Ellipse(xy=[point.y, point.x],
+                                       width=point.mse_data["a"] * 500,
+                                       height=point.mse_data["b"] * 500,
+                                       angle=point.mse_data["theta"],
+                                       fill=False,
+                                       ))
+
+    def _set_plot_limits(self):
+        x, y = [], []
+        for point in self.project.points["all_points"].values():
+            x.append(point.x)
+            y.append(point.y)
+        x_min, x_max = min(x), max(x)
+        y_min, y_max = min(y), max(y)
+        limits = [x_max - x_min,
+                  y_max - y_min]
+        length = max(limits) / 2 + 20
+        y_lim = [(x_min + x_max / 2) - length, (x_min + x_max / 2) + length]
+        x_lim = [(y_min + y_max / 2) - length, (y_min + y_max / 2) + length]
+        self.ax.set_xlim(*x_lim)
+        self.ax.set_ylim(*y_lim)
+
     def plot(self, project):
         self.project = project
         self._plot_points()
         self._plot_stations()
+        self._plot_mse_ellipses()
+        self._set_plot_limits()
         plt.show()
