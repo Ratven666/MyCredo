@@ -4,9 +4,10 @@ import pandas as pd
 
 from base.Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
+from measurements.AbstractMeasureABC import AbstractMeasureABC
 
 
-class CompositeMeasurementsABC(ABC):
+class CompositeMeasurementsABC(AbstractMeasureABC):
 
     def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass):
         self.start_point = start_point

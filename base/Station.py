@@ -1,5 +1,7 @@
 import pandas as pd
 
+from measurements.AbstractMeasureABC import AbstractMeasureABC
+from measurements.MeasuredPoint import MeasuredPoint
 from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
 from measurements.directions.Direction import Direction
 from measurements.MeasurementABC import MeasurementABC
@@ -11,7 +13,6 @@ class Station:
     def __init__(self, station_point: Point):
         self.station_point = station_point
         self._measurements = []
-        self.dz = None
 
     def __iter__(self):
         return iter(self._measurements)
@@ -35,21 +36,24 @@ class Station:
                         dir_m.append(measure)
         st_df = pd.DataFrame()
         sum_p = 0
-        for dir in dir_m:
-            c = dir.get_a_coefficients_df()
-            c = c.mul(dir.p)
+        for direction in dir_m:
+            c = direction.get_a_coefficients_df()
+            c = c.mul(direction.p)
             st_df = pd.concat([st_df, c]).fillna(0)
-            sum_p += dir.p
+            sum_p += direction.p
         dz_equivalent = st_df.sum()
         dz_equivalent.name = f"{self.station_point.point_name}_dz"
         try:
             p = -1 / sum_p
         except ZeroDivisionError:
             p = 0
-        p_df = pd.DataFrame([{"p": p}], index=[f"{self.station_point.point_name}_dz"])
+        p_df = pd.DataFrame([{f"{self.station_point.point_name}_dz": p}], index=[f"{self.station_point.point_name}_dz"])
         return dz_equivalent, p_df
 
-    def add_measurement(self, measurement: MeasurementABC):
+    def add_measurement(self, measurement: AbstractMeasureABC):
+        if isinstance(measurement, MeasuredPoint) and measurement.point == self.station_point:
+            self._measurements.append(measurement)
+            return
         if self.station_point == measurement.start_point:
             self._measurements.append(measurement)
         else:

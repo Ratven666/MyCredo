@@ -31,6 +31,6 @@ project.calculate()
 # project.plot(scale=30)
 print(project.mse_df)
 # print(project.k_df)
-print(project._calculator.p_df)
-
+# print(project._calculator.p_df)
+project.mse_df.to_excel("test.xlsx")
 # print(project.mse_df)

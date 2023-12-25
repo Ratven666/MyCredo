@@ -73,5 +73,4 @@ class Calculator:
     def calc_np_arrays(self):
         A = self.a_df.to_numpy()
         P = self.p_df.to_numpy()
-        P = np.diag(P.T[0])
         return A, P

@@ -6,9 +6,10 @@ import pandas as pd
 from CONFIG import MU_0
 from base.Point import Point
 from accuracy_classes.AccuracyClass import AccuracyClass
+from measurements.AbstractMeasureABC import AbstractMeasureABC
 
 
-class MeasurementABC(ABC):
+class MeasurementABC(AbstractMeasureABC):
 
     def __init__(self, start_point: Point, end_point: Point, mse_class: AccuracyClass):
         self.start_point = start_point
@@ -66,5 +67,5 @@ class MeasurementABC(ABC):
         pass
 
     def get_p_df(self):
-        p_df = pd.DataFrame([{"p": self.p}], index=[self.get_index()])
+        p_df = pd.DataFrame([{self.get_index(): self.p}], index=[self.get_index()])
         return p_df

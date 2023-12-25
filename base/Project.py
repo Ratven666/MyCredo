@@ -1,16 +1,17 @@
 from base.Calculator import Calculator
 from base.Point import Point
 from base.Station import Station
+from measurements.AbstractMeasureABC import AbstractMeasureABC
+from measurements.MeasuredPoint import MeasuredPoint
 from measurements.MeasurementABC import MeasurementABC
 from measurements.composite_measurments.CompositeMeasurementsABC import CompositeMeasurementsABC
 from plotters.ProjectMPLPlotter import ProjectMPLPlotter
 
 
 class Project:
-
     points = {"all_points": {},
-                "base_points": {},
-                "evaluated_points": {},
+              "base_points": {},
+              "evaluated_points": {},
               }
 
     stations = {}
@@ -49,7 +50,16 @@ class Project:
     def add_station(self, station: Station):
         self.stations[station.station_point.point_name] = station
 
-    def add_measurement(self, measurement: [MeasurementABC, CompositeMeasurementsABC]):
+    def add_measurement(self, measurement: AbstractMeasureABC):
+        if isinstance(measurement, MeasuredPoint):
+            if measurement.point.point_name in self.stations:
+                self.stations[measurement.point.point_name].add_measurement(measurement)
+            else:
+                station = Station(station_point=measurement.point)
+                station.add_measurement(measurement=measurement)
+                self.add_station(station=station)
+            self.add_point(measurement.point)
+            return
         base_point = measurement.start_point
         if base_point.point_name in self.stations:
             self.stations[base_point.point_name].add_measurement(measurement)
